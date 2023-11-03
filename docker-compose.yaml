@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  api:
+    container_name: clickhouse_api
+    build: src
+    depends_on:
+      - clickhouse
+    networks:
+      - ch_network
+    ports:
+      - '9090:8000'
+    restart: always
+
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    ports:
+      - "9123:8123"
+    networks:
+      - ch_network
+
+networks:
+  ch_network:
+    driver: bridge
